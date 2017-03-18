@@ -1,9 +1,14 @@
 package main
 
-func main() {
-    loadConfig()
+import (
+    "monit/bot"
+    "monit/config"
+)
 
-    bot := new(Bot)
+func main() {
+    config.LoadConfig()
+
+    bot := new(bot.Bot)
     bot.Connect()
 
     <-make(chan struct{})

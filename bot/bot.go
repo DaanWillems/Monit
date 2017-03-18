@@ -1,8 +1,9 @@
-package main
+package bot
 
 import (
     "github.com/bwmarrin/discordgo"
     "fmt"
+    "monit/config"
 )
 
 type Bot struct {
@@ -27,8 +28,8 @@ func (b Bot) messageHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
 }
 
 func (b Bot) Connect()  {
-    b.dg, _ = discordgo.New("Bot " +  getToken()) 
-    b.mainChannel = getMainChannel()//TODO: Place this in config
+    b.dg, _ = discordgo.New("Bot " +  config.GetToken()) 
+    b.mainChannel = config.GetMainChannel()//TODO: Place this in config
     u, err := b.dg.User("@me")
 
     if err != nil {
