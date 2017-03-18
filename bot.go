@@ -2,9 +2,8 @@ package main
 
 import (
     "github.com/bwmarrin/discordgo"
+    "fmt"
 )
-
-const Token string = getToken()
 
 type Bot struct {
     dg *discordgo.Session
@@ -28,10 +27,17 @@ func (b Bot) messageHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
 }
 
 func (b Bot) Connect()  {
-    b.dg, _ = discordgo.New("Bot " + Token) 
+    b.dg, _ = discordgo.New("Bot " +  getToken()) 
     b.mainChannel = getMainChannel()//TODO: Place this in config
-    u, _ := b.dg.User("@me")
+    u, err := b.dg.User("@me")
+
+    if err != nil {
+        fmt.Println(err.Error())
+        fmt.Println("Your token is most likely misconfigured")
+        return
+    }
     b.botId = u.ID
+
     b.dg.Open()
     b.dg.AddHandler(b.messageHandler)
 }
