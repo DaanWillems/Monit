@@ -18,7 +18,6 @@ Compile it by typing "go build"
 
 <b>Step 3</b>
 Create a discord bot on www.discordapp.com/developers
-Place the token in the configuration file
 
 <b>Step 4</b>
 Place the token in the configuration file
