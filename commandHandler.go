@@ -7,10 +7,10 @@ import (
 func handleCommand(s *discordgo.Session, m *discordgo.MessageCreate, b Bot) string {
     switch m.Content {
     case "!help":
-        return "Commands: !ping, !help, !deploy"
+        return getText("help")
     case "!ping":
-        return "pong"
+        return getText("ping")
     default:
-        return "Unknown command, type \"!help\" for help."
+        return getText("unknown")
     }
 }

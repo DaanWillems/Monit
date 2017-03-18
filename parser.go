@@ -50,3 +50,7 @@ func getToken() string {
 func getMainChannel() string {
     return data["mainchannel"].(string)
 }
+
+func getText(s string) string {
+    return text[s].(string)
+}
