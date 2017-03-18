@@ -9,7 +9,7 @@ import (
 
 const ConfigLocation string = "/etc/opt/monit/"
 const ConfigName string = "config.json"
-const Template string = "{\n \"mainchannel\": \"0\",\n \"token\": \"0\",\n \"text\": {\n   \"example\": \"example\"\n } \n}"
+const Template string = "{\n \"mainchannel\": \"0\",\n \"token\": \"0\",\n  \"text\": { \n\"help\": \"Commands: !help, !ping, !deploy\", \n\"ping\": \"pong\", \n\"unknown\": \"Unknown command, type 'help' for help.\" \n} \n}"
 
 var data map[string]interface{}
 var text map[string]interface{}
