@@ -13,6 +13,8 @@ func handleCommand(s *discordgo.Session, m *discordgo.MessageCreate) string {
         return config.GetText("help")
     case "!ping":
         return config.GetText("ping")
+    case "!getChannelId":
+        return m.ChannelID
     default:
         return config.GetText("unknown")
     }
