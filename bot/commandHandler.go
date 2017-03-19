@@ -5,8 +5,10 @@ import (
     "monit/config"
 )
 
-func handleCommand(s *discordgo.Session, m *discordgo.MessageCreate, b Bot) string {
+func handleCommand(s *discordgo.Session, m *discordgo.MessageCreate) string {
     switch m.Content {
+    case "!echo":
+        return m.Content[1:len(m.Content)]
     case "!help":
         return config.GetText("help")
     case "!ping":

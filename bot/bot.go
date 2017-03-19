@@ -4,17 +4,16 @@ import (
     "github.com/bwmarrin/discordgo"
     "fmt"
     "monit/config"
+    "os"
 )
 
-type Bot struct {
-    dg *discordgo.Session
-    botId string
-    mainChannel string
-}
+var Session *discordgo.Session
+var botId string
+var mainChannel string
 
-func (b Bot) messageHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
+func messageHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
     //Make sure the bot doesnt respond to itself
-    if m.Author.ID == b.botId {
+    if m.Author.ID == botId {
         return
     }
 
@@ -23,23 +22,29 @@ func (b Bot) messageHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
         return
     }
 
-    r := handleCommand(s, m, b)
+    r := handleCommand(s, m)
+    fmt.Println(m.ChannelID)
     _, _ = s.ChannelMessageSend(m.ChannelID, r)
 }
 
-func (b Bot) Connect()  {
-    b.dg, _ = discordgo.New("Bot " +  config.GetToken()) 
-    b.mainChannel = config.GetMainChannel()//TODO: Place this in config
-    u, err := b.dg.User("@me")
+//Send message defaults to mainchannel unless specified otherwise in the constructor
+func SendMessage(m string) {
+    _, _ = Session.ChannelMessageSend(mainChannel, m)
+}
+
+func Connect() {
+    Session, _ = discordgo.New("Bot " +  config.GetToken()) 
+    mainChannel = config.GetMainChannel()//TODO: Place this in config
+    u, err := Session.User("@me")
 
     if err != nil {
         fmt.Println(err.Error())
         fmt.Println("Your token is most likely misconfigured")
-        return
+        os.Exit(0)
     }
-    b.botId = u.ID
+    botId = u.ID
 
-    b.dg.Open()
-    b.dg.AddHandler(b.messageHandler)
+    Session.Open()
+    Session.AddHandler(messageHandler)
 }
 

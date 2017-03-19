@@ -43,5 +43,5 @@ func loadFile(p string, f string, c *config) {
     dat, _ := ioutil.ReadFile(p+f)
 
     _ = json.Unmarshal(dat, c)
-
+    fmt.Println("test: "+c.Mainchannel)
 }
