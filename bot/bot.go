@@ -3,11 +3,12 @@ package bot
 import (
     "github.com/bwmarrin/discordgo"
     "fmt"
-    "monit/config"
     "os"
+    "monit/commands"
+    "monit/config"
 )
 
-var Session *discordgo.Session
+var session *discordgo.Session
 var botId string
 var mainChannel string
 
@@ -22,29 +23,34 @@ func messageHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
         return
     }
 
-    r := handleCommand(s, m)
-    fmt.Println(m.ChannelID)
-    _, _ = s.ChannelMessageSend(m.ChannelID, r)
+    //Send the command to the evaluator
+    r := commands.EvaluateCommand(m.Content, s, m)
+
+    //Send the response
+    _, _ = session.ChannelMessageSend(m.ChannelID, r)
 }
 
-//Send message defaults to mainchannel unless specified otherwise in the constructor
-func SendMessage(m string) {
-    _, _ = Session.ChannelMessageSend(mainChannel, m)
+func sendMessage(m string) {
+    _, _ = session.ChannelMessageSend(mainChannel, m)
 }
 
+//Connect to discord server
 func Connect() {
-    Session, _ = discordgo.New("Bot " +  config.GetToken()) 
-    mainChannel = config.GetMainChannel()//TODO: Place this in config
-    u, err := Session.User("@me")
+    session, _ = discordgo.New("Bot " + config.GetToken())
+    mainChannel = config.GetMainChannel() //TODO: Place this in config
+    u, err := session.User("@me")
 
+    //If the connection fails the token used to connect is most likely incorrect, thus we exit.
     if err != nil {
         fmt.Println(err.Error())
         fmt.Println("Your token is most likely misconfigured")
         os.Exit(0)
     }
+
+    //Pretty clear
     botId = u.ID
 
-    Session.Open()
-    Session.AddHandler(messageHandler)
+    //Open the actual session and add a handler for messages
+    session.Open()
+    session.AddHandler(messageHandler)
 }
-

@@ -45,3 +45,4 @@ func loadFile(p string, f string, c *config) {
     _ = json.Unmarshal(dat, c)
     fmt.Println("test: "+c.Mainchannel)
 }
+

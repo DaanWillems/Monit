@@ -3,7 +3,6 @@ package config
 type config struct {
     Token string
     Mainchannel string
-    Text string
 }
 
 var c config
@@ -13,7 +12,7 @@ func LoadConfig() {
 }
 
 func initConfig() config {
-    co := config{Token: "0", Mainchannel: "0", Text: "test"}
+    co := config{Token: "0", Mainchannel: "0"}
     return co
 }
 
@@ -25,6 +24,3 @@ func GetMainChannel() string {
     return c.Mainchannel
 }
 
-func GetText(s string) string {
-    return c.Text
-}

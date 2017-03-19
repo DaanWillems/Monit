@@ -1,23 +1,21 @@
 package main
 
 import (
-    "monit/bot"
-    "monit/config"
-    "monit/webServer"
     "os"
     "bufio"
     "fmt"
+    "monit/bot"
+    "monit/commands"
+    "monit/config"
 )
 
 func main() {
     config.LoadConfig()
-
-    bot.Connect()
-
     go getInput()
+    commands.LoadCommands()
+    bot.Connect()
+    <-make(chan struct{})
 
-    webServer.StartServer()
- //   <-make(chan struct{})
     return
 }
 
@@ -28,7 +26,7 @@ func getInput() {
         if err != nil {
             fmt.Println(err)
         }
-        bot.SendMessage(text)
+        fmt.Println(text)
     }
 }
 
