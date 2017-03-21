@@ -1,4 +1,4 @@
-package commands
+package bot
 
 import (
     "github.com/bwmarrin/discordgo"
@@ -12,6 +12,8 @@ func LoadCommands() {
         "!deploy":   deploy,
         "!help":     help,
         "!source":   source,
+        "!getChannelId":   getChannelId,
+        "!thanks":   thanks,
     }
 }
 

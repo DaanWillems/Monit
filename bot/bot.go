@@ -4,7 +4,6 @@ import (
     "github.com/bwmarrin/discordgo"
     "fmt"
     "os"
-    "monit/commands"
     "monit/config"
 )
 
@@ -24,7 +23,7 @@ func messageHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
     }
 
     //Send the command to the evaluator
-    r := commands.EvaluateCommand(s, m)
+    r := EvaluateCommand(s, m)
 
     //Send the response
     _, _ = session.ChannelMessageSend(m.ChannelID, r)
@@ -32,6 +31,10 @@ func messageHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 func sendMessage(m string) {
     _, _ = session.ChannelMessageSend(mainChannel, m)
+}
+
+func DeleteMessage(channelID string, messageID string) {
+    session.ChannelMessageDelete(channelID, messageID)
 }
 
 //Connect to discord server
