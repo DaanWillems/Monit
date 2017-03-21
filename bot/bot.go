@@ -24,7 +24,7 @@ func messageHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
     }
 
     //Send the command to the evaluator
-    r := commands.EvaluateCommand(m.Content, s, m)
+    r := commands.EvaluateCommand(s, m)
 
     //Send the response
     _, _ = session.ChannelMessageSend(m.ChannelID, r)

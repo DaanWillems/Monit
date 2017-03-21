@@ -3,10 +3,10 @@ package commands
 import (
     "github.com/bwmarrin/discordgo"
 )
-var commandMap map[string]func(s *discordgo.Session, m *discordgo.MessageCreate) string
+var commandMap map[string]func(s *discordgo.Session, m *discordgo.MessageCreate, args []string) string
 
 func LoadCommands() {
-    commandMap = map[string]func(s *discordgo.Session, m *discordgo.MessageCreate) string {
+    commandMap = map[string]func(s *discordgo.Session, m *discordgo.MessageCreate, args []string) string {
         "!ping":     ping,
         "!echo":     echo,
         "!deploy":   deploy,
@@ -15,9 +15,12 @@ func LoadCommands() {
     }
 }
 
-func EvaluateCommand(cmd string, s *discordgo.Session, m *discordgo.MessageCreate) string {
-    if _, ok := commandMap[cmd]; !ok{  
-        return commandMap["!help"](s, m)
+func EvaluateCommand(s *discordgo.Session, m *discordgo.MessageCreate) string {
+    args, cmd := parseCommand(m.Content)
+
+    if _, ok := commandMap[cmd]; !ok{
+        return commandMap["!help"](s, m, args)
     }
-    return commandMap[cmd](s, m)
+
+    return commandMap[cmd](s, m, args)
 }

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+STR="package commands\n func $1() {\n //Execute command  \n}"
+
+$STR > commands/cmd_$1.go
