@@ -33,8 +33,9 @@ func messageHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
     _, _ = session.ChannelMessageSend(m.ChannelID, r)
 }
 
-func SendStandardMessage(m string) {
-    _, _ = session.ChannelMessageSend(mainChannel, m)
+func SendStandardMessage(m string) *discordgo.Message {
+    msg, _ := session.ChannelMessageSend(mainChannel, m)
+    return msg
 }
 
 func SendMessage(m string, channelID string) {
@@ -45,12 +46,15 @@ func DeleteMessage(channelID string, messageID string) {
     session.ChannelMessageDelete(channelID, messageID)
 }
 
+func EditMessage(channelID string, messageID string, content string) *discordgo.Message {
+    msg, _ := session.ChannelMessageEdit(channelID, messageID, content)
+    return msg
+}
 //Connect to discord server
 func Connect() {
     session, _ = discordgo.New("Bot " + config.GetToken())
     mainChannel = config.GetMainChannel() //TODO: Place this in config
     u, err := session.User("@me")
-
     //If the connection fails the token used to connect is most likely incorrect, thus we exit.
     if err != nil {
         fmt.Println(err.Error())

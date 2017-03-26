@@ -1,0 +1,5 @@
+#!/bin/bash
+pkill monit
+go build
+nohup ./monit >/dev/null 2>&1 &
+
