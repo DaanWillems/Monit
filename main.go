@@ -6,13 +6,15 @@ import (
     "fmt"
     "monit/bot"
     "monit/config"
+    "monit/github"
 )
 
 func main() {
     config.LoadConfig()
-    go getInput()
+ //   go getInput()
     bot.LoadCommands()
     bot.Connect()
+    github.StartServer()
     <-make(chan struct{})
 
     return

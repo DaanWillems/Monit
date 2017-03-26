@@ -13,8 +13,12 @@ var mainChannel string
 
 func messageHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
     //Make sure the bot doesnt respond to itself
-    if m.Author.ID == botId {
+    if m.Author.ID == botId || m.Author.ID == "293750263351738368" {
         return
+    }
+
+    if m.ChannelID == "291912433008640000" {
+        return;
     }
 
     //Make sure the message is a command
@@ -29,8 +33,12 @@ func messageHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
     _, _ = session.ChannelMessageSend(m.ChannelID, r)
 }
 
-func sendMessage(m string) {
+func SendStandardMessage(m string) {
     _, _ = session.ChannelMessageSend(mainChannel, m)
+}
+
+func SendMessage(m string, channelID string) {
+    _, _ = session.ChannelMessageSend(channelID, m)
 }
 
 func DeleteMessage(channelID string, messageID string) {

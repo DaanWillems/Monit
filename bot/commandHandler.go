@@ -7,13 +7,17 @@ var commandMap map[string]func(s *discordgo.Session, m *discordgo.MessageCreate,
 
 func LoadCommands() {
     commandMap = map[string]func(s *discordgo.Session, m *discordgo.MessageCreate, args []string) string {
-        "!ping":     ping,
-        "!echo":     echo,
-        "!deploy":   deploy,
-        "!help":     help,
-        "!source":   source,
-        "!getChannelId":   getChannelId,
-        "!thanks":   thanks,
+        "!ping":            ping,
+        "!echo":            echo,
+        "!deploy":          deploy,
+        "!help":            help,
+        "!source":          source,
+        "!getChannelId":    getChannelId,
+        "!setGitChannel":   setGitChannel,
+        "!thanks":          thanks,
+        "!disconnect":      disconnect,
+        "!what":            what,
+        "!test":            test,
     }
 }
 
