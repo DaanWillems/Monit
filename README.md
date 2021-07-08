@@ -11,7 +11,7 @@ The config directory will default to "/etc/opt/monit/config.json" You may change
 #### Steps
 
 <b>Step 1</b>
-Clone this repository
+Clone this repository (use "go get")
 
 <b>Step 2</b>
 Compile it by typing "go build"
